@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../../Context';
+import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
 export default function Note(props) {
   const context = useContext(Context);
   const handleClickDelete = (e) => {
@@ -28,16 +30,19 @@ export default function Note(props) {
   return (
     <div className='Note'>
       <h2 className='Note__title'>
-        <Link to={`/note/${id}`}>{name}</Link>
+        <Link style={{ textDecoration: 'none' }} to={`/note/${id}`}>
+          {name}
+        </Link>
       </h2>
-      <button
+      <Button
+        variant='dark'
         className='Note__delete'
         type='button'
         onClick={(e) => handleClickDelete(e)}
       >
         {' '}
         remove
-      </button>
+      </Button>
       <div>
         <div>
           Modified <span>{modified}</span>
@@ -46,3 +51,9 @@ export default function Note(props) {
     </div>
   );
 }
+Note.propTypes = {
+  id: PropTypes.string.isRequired,
+  modified: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onDeleteNote: PropTypes.func.isRequired,
+};

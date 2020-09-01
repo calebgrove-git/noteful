@@ -4,10 +4,13 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
-import './App.css';
+import AddFolder from '../AddFolder/AddFolder';
 import Context from '../../Context';
+import AddNote from '../AddNote/AddNote';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
+  const [added, setAdded] = useState(null);
   const [notes, setNotes] = useState([]);
   const [folders, setFolders] = useState([]);
   useEffect(() => {
@@ -29,7 +32,7 @@ export default function App() {
       .catch((error) => {
         console.error({ error });
       });
-  }, []);
+  }, [added]);
   function renderNavRoutes() {
     return (
       <>
@@ -47,6 +50,8 @@ export default function App() {
           <Route exact key={path} path={path} component={NoteListMain} />
         ))}
         <Route path='/note/:noteId' component={NotePageMain} />
+        <Route path='/addFolder' component={AddFolder} />
+        <Route path='/addNote' component={AddNote} />
       </>
     );
   }
@@ -57,17 +62,23 @@ export default function App() {
     notes: notes,
     folders: folders,
     deleteNote,
+    setAdded,
   };
   return (
     <>
       <Context.Provider value={value}>
         <div>
-          <h1>
-            <Link to='/'>Noteful</Link>{' '}
+          <h1 style={{ textAlign: 'center' }}>
+            <Link style={{ textDecoration: 'none' }} to='/'>
+              Noteful
+            </Link>{' '}
           </h1>
-          <nav>{renderNavRoutes()}</nav>
-          <header></header>
-          <main>{renderMainRoutes()}</main>
+
+          <div className='container'>
+            <nav>{renderNavRoutes()}</nav>
+            <header></header>
+            <main>{renderMainRoutes()}</main>
+          </div>
         </div>
       </Context.Provider>
     </>

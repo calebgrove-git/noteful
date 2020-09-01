@@ -1,18 +1,40 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../../Context';
+import { Route } from 'react-router-dom';
+import { Breadcrumb, Button } from 'react-bootstrap';
 
-export default function NoteListNav(props) {
+export default function NoteListNav() {
   const context = useContext(Context);
   return (
     <div>
-      <ul>
+      <Breadcrumb>
         {context.folders.map((folder) => (
-          <li key={folder.id}>
-            <Link to={`/folder/${folder.id}`}>{folder.name}</Link>
-          </li>
+          <Breadcrumb.Item className='folders' key={folder.id}>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/folder/${folder.id}`}
+            >
+              {folder.name}
+            </Link>
+          </Breadcrumb.Item>
         ))}
-      </ul>
+      </Breadcrumb>
+      <Route
+        path='/'
+        exact
+        render={({ history }) => {
+          return (
+            <Button
+              onClick={() => {
+                history.push('/addFolder');
+              }}
+            >
+              Add Folder
+            </Button>
+          );
+        }}
+      />
     </div>
   );
 }
