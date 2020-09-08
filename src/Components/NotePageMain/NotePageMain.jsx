@@ -29,29 +29,23 @@ export default function NotePageMain(props) {
     setContextState(context);
   }, [context]);
   return (
-    <>
+    <ErrorBoundary>
       <section>
-        {note ? (
-          <>
-            <ErrorBoundary>
-              <Note
-                id={note.id}
-                name={note.name}
-                modified={note.modified}
-                onDeleteNote={deleteNote}
-              />
-            </ErrorBoundary>
-            <div>
-              {note.content.split(/\n \r|\n/).map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </>
-        ) : (
-          <h2>No note found</h2>
-        )}
+        <>
+          <Note
+            id={note.id}
+            name={note.name}
+            modified={note.modified}
+            onDeleteNote={deleteNote}
+          />
+          <div>
+            {note.content.split(/\n \r|\n/).map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
+        </>
       </section>
-    </>
+    </ErrorBoundary>
   );
 }
 NotePageMain.propTypes = {
