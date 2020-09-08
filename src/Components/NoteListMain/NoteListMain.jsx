@@ -15,39 +15,39 @@ export default function NoteListMain(props) {
     props.history.push(`/`);
   };
   return (
-    <div className='noteList'>
-      <section>
-        <ul>
-          {notes.map((note) => (
-            <li key={note.id}>
-              <ErrorBoundary>
+    <ErrorBoundary>
+      <div className='noteList'>
+        <section>
+          <ul>
+            {notes.map((note) => (
+              <li key={note.id}>
                 <Note
                   id={note.id}
                   name={note.name}
                   modified={note.modified}
                   onDeleteNote={deleteNote}
                 />
-              </ErrorBoundary>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <Route
-        path='/'
-        exact
-        render={({ history }) => {
-          return (
-            <Button
-              onClick={() => {
-                history.push('/addNote');
-              }}
-            >
-              Add Note
-            </Button>
-          );
-        }}
-      />
-    </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <Route
+          path='/'
+          exact
+          render={({ history }) => {
+            return (
+              <Button
+                onClick={() => {
+                  history.push('/addNote');
+                }}
+              >
+                Add Note
+              </Button>
+            );
+          }}
+        />
+      </div>
+    </ErrorBoundary>
   );
 }
 NoteListMain.propTypes = {
