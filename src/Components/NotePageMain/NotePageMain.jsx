@@ -8,7 +8,7 @@ export default function NotePageMain(props) {
   const context = useContext(Context);
   const [contextState, setContextState] = useState(useContext(Context));
   const [notes, setNotes] = useState(context.notes);
-  const [noteId, setNoteId] = useState(props.match.params.noteId);
+  const [noteId] = useState(props.match.params.noteId);
   const deleteNote = () => {
     props.history.push(`/`);
   };
@@ -24,26 +24,29 @@ export default function NotePageMain(props) {
         return note.id === id;
       })
     );
-  }, [contextState]);
+  }, [contextState, context.notes, noteId, notes, props.match.params.noteId]);
   useEffect(() => {
     setContextState(context);
   }, [context]);
+
   return (
     <ErrorBoundary>
       <section>
-        <>
-          <Note
-            id={note.id}
-            name={note.name}
-            modified={note.modified}
-            onDeleteNote={deleteNote}
-          />
-          <div>
-            {note.content.split(/\n \r|\n/).map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
-        </>
+        {note != null && (
+          <>
+            <Note
+              id={note.id}
+              name={note.name}
+              modified={note.modified}
+              onDeleteNote={deleteNote}
+            />
+            <div>
+              {note.content.split(/\n \r|\n/).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </>
+        )}
       </section>
     </ErrorBoundary>
   );

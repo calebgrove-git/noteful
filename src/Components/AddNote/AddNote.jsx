@@ -16,7 +16,7 @@ export default function AddNote(props) {
   const [folders, setFolders] = useState(contextState.folders);
   useEffect(() => {
     setFolders(context.folders);
-  }, [contextState]);
+  }, [contextState, context.folders]);
   useEffect(() => {
     setContextState(context);
   }, [context]);
@@ -60,7 +60,21 @@ export default function AddNote(props) {
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
 
-  today = yyyy + '-' + mm + '-' + dd;
+  today =
+    yyyy +
+    '-' +
+    mm +
+    '-' +
+    dd +
+    'T' +
+    today.getUTCHours() +
+    ':' +
+    today.getUTCMinutes() +
+    ':' +
+    today.getUTCSeconds() +
+    ':' +
+    today.getUTCMilliseconds() +
+    'Z';
   const handleFolderChange = (e) => {
     setfolderId(e);
     setFolderTouched(true);

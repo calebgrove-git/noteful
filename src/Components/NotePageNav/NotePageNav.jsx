@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 export default function NotePageNav(props) {
   const context = useContext(Context);
-  const [notes, setNotes] = useState(context.notes);
-  const [folders, setFolders] = useState(context.folders);
-  const [noteId, setNoteId] = useState(props.match.params.noteId);
-  const [note, setNote] = useState({});
+  const [notes] = useState(context.notes);
+  const [folders] = useState(context.folders);
+  const [noteId] = useState(props.match.params.noteId);
+  const [, setNote] = useState({});
   const [folder, setFolder] = useState({});
   useEffect(() => {
     notes.find((note) => {
@@ -17,8 +17,9 @@ export default function NotePageNav(props) {
       }
       setNote(note.id === id);
       setFolder(folders.find((folder) => folder.id === note.folderId));
+      return null;
     });
-  }, []);
+  }, [folders, noteId, notes, props.match.params.noteId]);
   return (
     <div>
       <Button onClick={() => props.history.goBack()}>Back</Button>
