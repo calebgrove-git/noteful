@@ -11,12 +11,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   const [added, setAdded] = useState(null);
+  const [removed, setRemoved] = useState(null);
   const [notes, setNotes] = useState([]);
   const [folders, setFolders] = useState([]);
   useEffect(() => {
     Promise.all([
-      fetch('http://localhost:9090/notes'),
-      fetch('http://localhost:9090/folders'),
+      fetch('https://tranquil-depths-92452.herokuapp.com/api/notes'),
+      fetch('https://tranquil-depths-92452.herokuapp.com/api/folders'),
     ])
       .then(([notesRes, foldersRes]) => {
         if (!notesRes.ok) return notesRes.json().then((e) => Promise.reject(e));
@@ -28,11 +29,13 @@ export default function App() {
       .then(([notes, folders]) => {
         setFolders(folders);
         setNotes(notes);
+        setAdded(null);
+        setRemoved(null);
       })
       .catch((error) => {
         console.error({ error });
       });
-  }, [added]);
+  }, [added, removed]);
   function renderNavRoutes() {
     return (
       <>
@@ -63,6 +66,7 @@ export default function App() {
     folders: folders,
     deleteNote,
     setAdded,
+    setRemoved,
   };
   return (
     <>

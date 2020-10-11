@@ -5,4 +5,5 @@ export default React.createContext({
   folders: [],
   deleteNote: () => {},
   setAdded: () => {},
+  setRemoved:()=>{}
 });

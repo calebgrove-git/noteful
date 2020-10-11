@@ -8,5 +8,5 @@ export default function ValidationError(props) {
   return <></>;
 }
 ValidationError.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
 };

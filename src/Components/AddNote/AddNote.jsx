@@ -11,7 +11,7 @@ export default function AddNote(props) {
   const [nameTouched, setNameTouched] = useState(false);
   const [content, setContent] = useState('');
   const [contentTouched, setContentTouched] = useState(false);
-  const [folderId, setfolderId] = useState('');
+  const [folderId, setfolderId] = useState(null);
   const [folderTouched, setFolderTouched] = useState(false);
   const [folders, setFolders] = useState(contextState.folders);
   useEffect(() => {
@@ -27,34 +27,20 @@ export default function AddNote(props) {
     props.history.push(`/`);
   };
   const postNote = () => {
-    fetch('http://localhost:9090/notes', {
+    fetch('https://tranquil-depths-92452.herokuapp.com/api/notes', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id: createId(),
         name: name,
         modified: today,
-        folderId: folderId,
+        folderid: folderId,
         content: content,
       }),
     })
       .then((response) => response.json())
       .catch((error) => console.log(error));
   };
-  const createId = () => {
-    return (
-      Math.random().toString(36).substring(2, 10) +
-      '-' +
-      Math.random().toString(36).substring(2, 6) +
-      '-' +
-      Math.random().toString(36).substring(2, 6) +
-      '-' +
-      Math.random().toString(36).substring(2, 6) +
-      '-' +
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 2)
-    );
-  };
+
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!

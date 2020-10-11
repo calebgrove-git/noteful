@@ -15,27 +15,13 @@ export default function AddFolder(props) {
     props.history.push(`/`);
   };
   const postFolder = () => {
-    fetch('http://localhost:9090/folders', {
+    fetch('https://tranquil-depths-92452.herokuapp.com/api/folders', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: createId(), name: name }),
+      body: JSON.stringify({ name: name }),
     })
       .then((response) => response.json())
       .catch((error) => console.log(error));
-  };
-  const createId = () => {
-    return (
-      Math.random().toString(36).substring(2, 10) +
-      '-' +
-      Math.random().toString(36).substring(2, 6) +
-      '-' +
-      Math.random().toString(36).substring(2, 6) +
-      '-' +
-      Math.random().toString(36).substring(2, 6) +
-      '-' +
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 2)
-    );
   };
   const validateName = () => {
     if (name.length === 0) {

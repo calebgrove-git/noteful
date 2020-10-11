@@ -21,14 +21,13 @@ export default function NotePageMain(props) {
         if (!id) {
           id = props.match.params.noteId;
         }
-        return note.id === id;
+        return note.id.toString() === id;
       })
     );
   }, [contextState, context.notes, noteId, notes, props.match.params.noteId]);
   useEffect(() => {
     setContextState(context);
   }, [context]);
-
   return (
     <ErrorBoundary>
       <section>

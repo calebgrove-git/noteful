@@ -9,7 +9,7 @@ export default function NoteListMain(props) {
   const context = useContext(Context);
   const folderId = props.match.params.folderId;
   const getNotes = (notes = [], folderId) =>
-    !folderId ? notes : notes.filter((note) => note.folderId === folderId);
+    !folderId ? notes : notes.filter((note) => note.folderId.toString() === folderId);
   const notes = getNotes(context.notes, folderId);
   const deleteNote = () => {
     props.history.push(`/`);

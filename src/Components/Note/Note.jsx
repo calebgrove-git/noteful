@@ -8,7 +8,7 @@ export default function Note(props) {
   const handleClickDelete = (e) => {
     e.preventDefault();
     const noteId = props.id;
-    fetch(`http://localhost:9090/notes/${noteId}`, {
+    fetch(`https://tranquil-depths-92452.herokuapp.com/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
@@ -25,7 +25,9 @@ export default function Note(props) {
       .catch((error) => {
         console.error({ error });
       });
+      context.setRemoved(Math.random())
   };
+  console.log(context)
   const { name, id, modified } = props;
   return (
     <div className='Note'>
@@ -52,7 +54,7 @@ export default function Note(props) {
   );
 }
 Note.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   modified: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onDeleteNote: PropTypes.func.isRequired,
